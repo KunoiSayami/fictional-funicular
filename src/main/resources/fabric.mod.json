@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "shareinfo",
+  "version": "${version}",
+  "name": "Shareinfo",
+  "description": "Share current client info",
+  "authors": [
+    "KunoiSayami"
+  ],
+  "contact": {
+    "website": "https://github.com/KunoiSayami"
+  },
+  "license": "AGPL-3.0",
+  "icon": "assets/shareinfo/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "main": [
+      "dev.leanhe.minecraft.shareinfo.Shareinfo"
+    ]
+  },
+  "mixins": [
+    "shareinfo.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.8",
+    "fabric": "*",
+    "minecraft": "1.19"
+  }
+}
