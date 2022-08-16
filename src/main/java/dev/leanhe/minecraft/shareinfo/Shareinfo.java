@@ -4,17 +4,13 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.server.ServerMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
-import java.util.HashMap;
 
 public class Shareinfo implements ModInitializer {
 
@@ -23,7 +19,7 @@ public class Shareinfo implements ModInitializer {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-    public static Shareinfo instance;
+    //public static Shareinfo instance;
 
 
     static class PointHandler implements HttpHandler {
@@ -38,6 +34,7 @@ public class Shareinfo implements ModInitializer {
                 var postion = player.getPos();
                 response = "{\"vaild\": true, \"x\": %f, \"y\": %f, \"z\": %f}".formatted(postion.getX(), postion.getY(), postion.getZ());
             }
+            httpExchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
             httpExchange.sendResponseHeaders(200, response.length());
             OutputStream os = httpExchange.getResponseBody();
             os.write(response.getBytes());
@@ -48,9 +45,9 @@ public class Shareinfo implements ModInitializer {
     @Override
     public void onInitialize() {
         LOGGER.info("Listening on localhost: %d".formatted(LISTEN_PORT));
-        instance = this;
+        //instance = this;
         try {
-            var server = HttpServer.create(new InetSocketAddress(LISTEN_PORT), 0);
+            var server = HttpServer.create(new InetSocketAddress("localhost", LISTEN_PORT), 0);
             server.createContext("/", new PointHandler());
             server.setExecutor(null);
             server.start();
